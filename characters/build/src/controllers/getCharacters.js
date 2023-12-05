@@ -17,7 +17,18 @@ const utils_1 = require("../utils");
 const getCharacters = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
-    const { data } = yield axios_1.default.get(`http://database:8004/Character?page=${page}&limit=${limit}`);
-    (0, utils_1.response)(res, 200, data);
+    const { gender, name } = req.query;
+    if (gender) {
+        const { data } = yield axios_1.default.get(`http://database:8004/Character?page=${page}&limit=${limit}&gender=${gender}`);
+        return (0, utils_1.response)(res, 200, data);
+    }
+    else if (name) {
+        const { data } = yield axios_1.default.get(`http://database:8004/Character?page=${page}&limit=${limit}&name=${name}`);
+        return (0, utils_1.response)(res, 200, data);
+    }
+    else {
+        const { data } = yield axios_1.default.get(`http://database:8004/Character?page=${page}&limit=${limit}`);
+        return (0, utils_1.response)(res, 200, data);
+    }
 });
 exports.default = getCharacters;
